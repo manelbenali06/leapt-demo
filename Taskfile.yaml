@@ -1,0 +1,29 @@
+version: '3'
+
+tasks:
+    fixtures:
+        desc: Generate fixtures
+        cmds:
+            - rm -f var/data.db
+            - symfony console d:d:c --quiet
+            - symfony console d:s:u --force --quiet
+            - symfony console a:f:l
+
+    composer:
+        desc: Install PHP vendors
+        cmds:
+            - symfony composer install
+        sources:
+            - composer.lock
+        generates:
+            - vendor/**/*
+
+    start:
+        desc: Start Symfony server
+        cmds:
+            - symfony serve -d
+
+    stop:
+        desc: Stop Symfony server
+        cmds:
+            - symfony server:stop
